@@ -1,8 +1,8 @@
 name: Telegram Bio Clock 24/7
 
 on:
+  push:
   schedule:
-    # Har 5 soatda avtomatik qayta ishga tushadi (24/7 uzluksiz ishlashi uchun)
     - cron: "0 */5 * * *"
   workflow_dispatch:
 
@@ -31,7 +31,7 @@ jobs:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID || vars.TELEGRAM_API_ID }}
           TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH || vars.TELEGRAM_API_HASH }}
           TELEGRAM_SESSION_STRING: ${{ secrets.TELEGRAM_SESSION_STRING || vars.TELEGRAM_SESSION_STRING }}
-          BIO_TEMPLATE: ${{ vars.BIO_TEMPLATE || '⏰ Hozirgi vaqt: {time} | 🗓 {date_uz}, {weekday_short} | Teacher 👨‍🏫' }}
+          BIO_TEMPLATE: ${{ vars.BIO_TEMPLATE }}
           TIMEZONE: "Asia/Tashkent"
           RUN_DURATION_SECONDS: "18000"
         run: python bio_clock.py
