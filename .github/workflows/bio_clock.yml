@@ -6,6 +6,10 @@ on:
     - cron: "0 */5 * * *"
   workflow_dispatch:
 
+permissions:
+  actions: write
+  contents: read
+
 concurrency:
   group: telegram-bio-clock
   cancel-in-progress: true
@@ -35,3 +39,9 @@ jobs:
           TIMEZONE: "Asia/Tashkent"
           RUN_DURATION_SECONDS: "18000"
         run: python bio_clock.py
+
+      - name: Auto-restart next 5-hour cycle
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run bio_clock.yml || true
